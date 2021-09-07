@@ -1,5 +1,5 @@
 - 👋 Hi, I’m @djoyce17
-- 👀 I’m interested in economics, psychology, human behavior, happiness, worker choice
+- 👀 I’m interested in economics, psychology, human behavior, happiness, worker skills
 - 🌱 I’m currently learning python, html, command line
 - 💞️ I’m looking to collaborate on not sure yet
 - 📫 How to reach me ...
