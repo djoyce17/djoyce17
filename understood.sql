@@ -16,6 +16,13 @@ where 1=1
 and p.session_id not in (
     select session_id
     from session_data)
+    
+----there are 2 user ids that have pageviews but do not have sessions (same as above)
+select distinct p.understood_id
+from pageview_data p 
+-- join (select distinct understood_id from session_data) s
+-- on p.understood_id = s.understood_id
+where p.understood_id not in (select distinct understood_id from session_data)
 
 --1 accessed users by device
 select 
