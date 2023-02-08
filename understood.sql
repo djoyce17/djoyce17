@@ -59,8 +59,11 @@ with s as (
     select page_path_slug,
     count(*) as num
     from pageview_data p
+    join session_data s
+    on p.session_id = s.session_id
     where 1=1
     and site_section = 'articles'
+    and not engagement_is_bounce_session
     group by 1
 
 )
