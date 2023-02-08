@@ -93,10 +93,8 @@ with
             join session_data s
             on p.session_id = s.session_id
             where 1=1
-            AND (
-                site_context_site_section_initial = 'articles'
-                OR site_context_site_section_latest = 'articles'
-            )
+            and site_section = 'articles'
+            and not engagement_is_bounce_session
             group by 1
         ) 
 ,
