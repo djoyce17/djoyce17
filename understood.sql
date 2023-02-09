@@ -112,12 +112,11 @@ with
         )
 
 select 
-    p.page_path_slug
-    , sum(case when is_user_initial_session then 1 else 0 end) as num_return_sessions
+
+     sum(case when not is_user_initial_session then 1 else 0 end) as num_return_sessions
     , avg(engagement_y_percentage_scrolled) as avg_scroll_depth
 from pageview_data p
 join session_data s
 on p.session_id = s.session_id
 join r
 on p.page_path_slug = r.page_path_slug
-group by 1
