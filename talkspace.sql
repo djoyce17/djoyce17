@@ -66,3 +66,33 @@ on m.id = p.provider_id
 group by 1
 
 -- number 5
+
+select 
+	*
+	, current_number_of_clients/current_avg_max_provider_capacity as num_providers
+	, projected_number_of_clients/current_avg_max_provider_capacity as num_providers_needed
+	, (projected_number_of_clients/current_avg_max_provider_capacity) - current_number_of_clients/current_avg_max_provider_capacity as additional_providers
+from talkspace.state_fact sf 
+
+-- number 6. at the end of a year we will have to add about 1 provider in each state
+with g as
+(
+	select 
+		* 
+		, case
+			when state = 'NY' then .01
+			when state = 'CA' then .02
+			when state = 'FL' then .02
+			when state = 'DL' then .03
+			when state = 'TX' then .01
+				end as growth_rate
+	from talkspace.state_fact
+)
+select 
+	state
+	, current_number_of_clients
+	, current_avg_max_provider_capacity
+	, growth_rate
+	, ceiling(current_number_of_clients*((1 + growth_rate/12))^12) as projected_number_of_clients
+	, ceiling(current_number_of_clients*((1 + growth_rate/12))^12/current_avg_max_provider_capacity - (current_number_of_clients/current_avg_max_provider_capacity)) as additional_providers
+from g
